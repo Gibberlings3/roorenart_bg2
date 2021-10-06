@@ -1,0 +1,111 @@
+BACKUP ~roorenart_bg2/backup~
+SUPPORT ~https://www.gibberlings3.net/forums/forum/28-miscellaneous-released-mods/~
+
+VERSION ~v1~
+
+ALWAYS
+
+  ACTION_IF NOT VARIABLE_IS_SET cd_always THEN BEGIN // check to make this happen only once per install
+    
+    OUTER_SET cd_always = 1
+    INCLUDE ~roorenart_bg2/lib/cd_portrait_copy.tph~
+  
+  END
+
+END
+
+README ~roorenart_bg2/readme-roorenart_bg2.html~
+
+LANGUAGE ~English~ ~english~ ~roorenart_bg2/english/setup.tra~
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// install portraits to BG2 npcs                    \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN @100 DESIGNATED 10
+REQUIRE_PREDICATE GAME_IS ~bg2 tob bg2ee eet bgt~ @101
+LABEL ~r1_roorenart_bg2_npcs~
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_rooren_art_portraits BEGIN
+  r1aerie => naerie
+  r1anome => nanomen
+  r1cernd => ncernd
+//  r1edwia => royo4 // edwina, handled separately below
+  r1edwin => nedwin
+  r1haer  => nhaer
+  r1imoen => nimoen
+  r1jahei => njaheir
+  r1jan   => njan
+  r1keldo => nkeldor
+  r1korga => nkorgan
+  r1mazzy => nmazzy
+  r1minsc => nminsc
+  r1nalia => nnalia
+  r1valyg => nvalyga
+  r1vicon => nvicon
+  r1yoshi => nyoshim  
+  r1sarev => sarevok // tob
+  r1dorn  => dorn    // bg2ee
+  r1neera => neera   // bg2ee
+  r1ohhex => ohhexx  // bg2ee
+  r1rasaa => rasaad  // bg2ee
+END  
+
+// actually install portraits
+ACTION_PHP_EACH cd_rooren_art_portraits AS src => dest BEGIN
+  LAF cd_portrait_copy STR_VAR source = EVAL "%src%" destination = EVAL "%dest%" source_path = "roorenart_bg2/portraits" END
+END
+
+/////                                                  \\\\\
+///// edwin > edwina stuff                             \\\\\
+/////                                                  \\\\\
+
+ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN
+  
+  OUTER_SPRINT edwin_large ~l~
+  OUTER_SPRINT edwin_small ~m~
+  COPY ~roorenart_bg2/portraits/r1edwia_330.bmp~ ~override/royo4%edwin_large%.bmp~
+       ~roorenart_bg2/portraits/r1edwia_266.bmp~ ~override/royo4%edwin_small%.bmp~
+
+END ELSE BEGIN
+
+  OUTER_SPRINT edwin_large ~m~
+  OUTER_SPRINT edwin_small ~s~
+  COPY ~roorenart_bg2/portraits/r1edwia_170.bmp~ ~override/royo4%edwin_large%.bmp~
+       ~roorenart_bg2/portraits/r1edwia_60.bmp~  ~override/royo4%edwin_small%.bmp~
+
+END
+
+COPY_EXISTING ~spin662.spl~ ~override~ // add portrait change opcodes to edwin transform spells: return to edwin
+  LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_large%~ END // large portrait
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_small%~ END // small portrait
+
+COPY_EXISTING ~spin916.spl~ ~override~ // add portrait change opcodes to edwin transform spells: change to edwina
+  LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_large%~ END // large portrait
+  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_small%~ END // small portrait
+
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////                                                  \\\\\
+///// Make portraits available for use by PC           \\\\\
+/////                                                  \\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
+
+BEGIN @200 DESIGNATED 20
+LABEL ~r1_roorenart_bg2_pcs~
+
+ACTION_FOR_EACH file IN 
+  r1aerie r1anome r1cernd r1dorn r1edwia r1edwin r1haer r1imoen r1jahei r1jan r1keldo r1korga r1mazzy
+  r1minsc r1nalia r1neera r1ohhex r1rasaa r1sarev r1valyg r1vicon r1yoshi 
+BEGIN
+						
+  LAF cd_pc_portrait_copy STR_VAR source = "%file%" source_path = "roorenart_bg2/portraits" END
+
+END
