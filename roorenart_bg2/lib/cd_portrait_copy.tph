@@ -60,6 +60,7 @@ BEGIN
 	  OUTER_SET height = 0
       COPY_EXISTING ~%source%%suffix_source%.bmp~ ~override~ // check height, if file exists
 	    READ_LONG 0x16 height
+      PATCH_IF height > 330 BEGIN SET height = 330 END
 	    BUT_ONLY IF_EXISTS
 	  
       ACTION_IF height = size BEGIN	// if height matches the desired size, copy over as properly named file to player portrait folder 
@@ -110,6 +111,7 @@ BEGIN
 	
 	  COPY_EXISTING ~%destination%%suffix%.bmp~ ~override~
 	    READ_LONG 0x16 height
+      PATCH_IF height > 330 BEGIN SET height = 330 END
 	    BUT_ONLY
 	  
 	  ACTION_IF FILE_EXISTS ~%source_path%/%source%_%height%.bmp~ THEN BEGIN

@@ -1,13 +1,13 @@
 BACKUP ~roorenart_bg2/backup~
 SUPPORT ~https://www.gibberlings3.net/forums/forum/28-miscellaneous-released-mods/~
 
-VERSION ~v1~
+VERSION ~v2~
 
 ALWAYS
 
-  ACTION_IF NOT VARIABLE_IS_SET cd_always THEN BEGIN // check to make this happen only once per install
+  ACTION_IF NOT VARIABLE_IS_SET firebeadstate1 THEN BEGIN // check to make this happen only once per install
     
-    OUTER_SET cd_always = 1
+	  INCLUDE ~roorenart_bg2/lib/g3_cpmvars_master.tpa~
     INCLUDE ~roorenart_bg2/lib/cd_portrait_copy.tph~
   
   END
@@ -21,74 +21,106 @@ LANGUAGE ~English~ ~english~ ~roorenart_bg2/english/setup.tra~
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////                                                  \\\\\
-///// install portraits to BG2 npcs                    \\\\\
+///// install portraits to BG/BG2 npcs                 \\\\\
 /////                                                  \\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 
 BEGIN @100 DESIGNATED 10
-REQUIRE_PREDICATE GAME_IS ~bg2 tob bg2ee eet bgt~ @101
+REQUIRE_PREDICATE GAME_IS ~bg2 tob bg2ee eet bgt bg1 totsc bgee tutu tutu_totsc~ @101
 LABEL ~r1_roorenart_bg2_npcs~
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY cd_rooren_art_portraits BEGIN
-  r1aerie => naerie
-  r1anome => nanomen
-  r1cernd => ncernd
-//  r1edwia => royo4 // edwina, handled separately below
-  r1edwin => nedwin
-  r1haer  => nhaer
-  r1imoen => nimoen
-  r1jahei => njaheir
-  r1jan   => njan
-  r1keldo => nkeldor
-  r1korga => nkorgan
-  r1mazzy => nmazzy
-  r1minsc => nminsc
-  r1nalia => nnalia
-  r1valyg => nvalyga
-  r1vicon => nvicon
-  r1yoshi => nyoshim  
-  r1sarev => sarevok // tob
-  r1dorn  => dorn    // bg2ee
-  r1neera => neera   // bg2ee
-  r1ohhex => ohhexx  // bg2ee
-  r1rasaa => rasaad  // bg2ee
+ 
+  naerie                 => r1aerie // aerie - bg2
+  "%tutu_scripta%jantis" => r1ajant // ajantis - bg
+  "%tutu_scripta%lora"   => r1alora // alora - bg
+  nanomen                => r1anome // anomen - bg2
+  baeloth                => r1baelo // baeloth - bg
+  "%tutu_scriptb%ranwe"  => r1branw // branwen - bg - also covers kulyok's Branwen for BGII
+  ncernd                 => r1cernd // cernd - bg2
+  "%tutu_scriptc%oran"   => r1coran // coran - bg
+  dorn                   => r1dorn  // dorn - bg, bg2 portraits are the same    
+  "%tutu_scriptd%ynahei" => r1dynah // dynaheir - bg 
+  "%tutu_scripte%dwin"   => r1edwi1 // edwin - bg
+  nedwin                 => r1edwin // edwin - bg2
+//royo4                  => r1edwia // edwina - bg2, handled separately below
+  "%tutu_scripte%ldoth"  => r1eldot // eldoth - bg
+  "%tutu_scriptf%aldorn" => r1faldo // faldorn - bg 
+  "%tutu_scriptg%arrick" => r1garri // garrick - bg 
+  nhaer                  => r1haer  // haer'dalis - bg2 
+  ohhexx                 => r1ohhex // hexxat - bg2ee
+  "%tutu_scripti%moen"   => r1imoe1 // imoen - bg
+  bdimoen                => r1imoe1 // imoen - sod variant, uses same source as bg
+  nimoen                 => r1imoen // imoen - bg2
+  "%tutu_scriptj%aheira" => r1jahe1 // jaheira - bg
+  njaheir                => r1jahei // jaheira - bg2
+  njan                   => r1jan   // jan - bg2
+  "%tutu_scriptk%again"  => r1kagai // kagain - bg 
+  nkeldor                => r1keldo // keldorn - bg2
+  "%tutu_scriptk%halid"  => r1khali // khalid - bg 
+  "%tutu_scriptk%ivan"   => r1kivan // kivan - bg 
+  "p#ki1"                => r1kivan // kivan - bg2 via kivan and deheiriana mod
+  nkorgan                => r1korga // korgan - bg2
+  nmazzy                 => r1mazzy // mazzy - bg2
+  "%tutu_scriptm%insc"   => r1minsc // minsc - bg - same source, different destination
+  nminsc                 => r1minsc // minsc - bg2 - same source, different destination
+  "%tutu_scriptm%ontar"  => r1monta // montaron - bg 
+  nnalia                 => r1nalia // nalia - bg2
+  neera                  => r1neera // neera - bg, bg2 portraits are the same
+  "%tutu_scriptq%uayle"  => r1quayl // quayle - bg 
+  rasaad                 => r1rasaa // rasaad - bg, bg2 portraits are the same
+  "%tutu_scripts%afana"  => r1safan // safana - bg 
+  sarevok                => r1sarev // sarevok - tob
+  "%tutu_scripts%hartel" => r1shart // shar-teel - bg 
+  "%tutu_scripts%kie"    => r1skie  // skie - bg
+  "%tutu_scriptt%iax"    => r1tiax  // tiax - bg 
+  nvalyga                => r1valyg // valygar - bg2
+  "%tutu_scriptv%iconia" => r1vico1 // viconia - bg2
+  bdvicon                => r1vicon // viconia - sod variant  - uses bg2 as source since it's closer to sod
+  nvicon                 => r1vicon // viconia - bg2
+  "%tutu_scriptx%an"     => r1xan   // xan - bg
+  "%tutu_scriptx%zar"    => r1xzar  // xzar - bg
+  "%tutu_scripty%eslick" => r1yesli // yeslick - bg 
+  nyoshim                => r1yoshi // yoshimo - bg2
+
 END  
 
 // actually install portraits
-ACTION_PHP_EACH cd_rooren_art_portraits AS src => dest BEGIN
+ACTION_PHP_EACH cd_rooren_art_portraits AS dest => src BEGIN
   LAF cd_portrait_copy STR_VAR source = EVAL "%src%" destination = EVAL "%dest%" source_path = "roorenart_bg2/portraits" END
 END
 
-/////                                                  \\\\\
-///// edwin > edwina stuff                             \\\\\
-/////                                                  \\\\\
-
-ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN
+ACTION_IF GAME_IS ~bg2 tob bg2ee eet bgt~ BEGIN // edwin > edwina stuff
   
-  OUTER_SPRINT edwin_large ~l~
-  OUTER_SPRINT edwin_small ~m~
-  COPY ~roorenart_bg2/portraits/r1edwia_330.bmp~ ~override/royo4%edwin_large%.bmp~
-       ~roorenart_bg2/portraits/r1edwia_266.bmp~ ~override/royo4%edwin_small%.bmp~
+  // edwin > edwina stuff
+  ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN 
+    
+    OUTER_SPRINT edwin_large ~l~
+    OUTER_SPRINT edwin_small ~m~
+    COPY ~roorenart_bg2/portraits/r1edwia_330.bmp~ ~override/royo4%edwin_large%.bmp~
+         ~roorenart_bg2/portraits/r1edwia_266.bmp~ ~override/royo4%edwin_small%.bmp~
 
-END ELSE BEGIN
+  END ELSE BEGIN
 
-  OUTER_SPRINT edwin_large ~m~
-  OUTER_SPRINT edwin_small ~s~
-  COPY ~roorenart_bg2/portraits/r1edwia_170.bmp~ ~override/royo4%edwin_large%.bmp~
-       ~roorenart_bg2/portraits/r1edwia_60.bmp~  ~override/royo4%edwin_small%.bmp~
+    OUTER_SPRINT edwin_large ~m~
+    OUTER_SPRINT edwin_small ~s~
+    COPY ~roorenart_bg2/portraits/r1edwia_170.bmp~ ~override/royo4%edwin_large%.bmp~
+         ~roorenart_bg2/portraits/r1edwia_60.bmp~  ~override/royo4%edwin_small%.bmp~
 
+  END
+
+  COPY_EXISTING ~spin662.spl~ ~override~ // add portrait change opcodes to edwin transform spells: return to edwin
+    LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_large%~ END // large portrait
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_small%~ END // small portrait
+
+  COPY_EXISTING ~spin916.spl~ ~override~ // add portrait change opcodes to edwin transform spells: change to edwina
+    LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_large%~ END // large portrait
+    LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_small%~ END // small portrait
+  
 END
-
-COPY_EXISTING ~spin662.spl~ ~override~ // add portrait change opcodes to edwin transform spells: return to edwin
-  LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_large%~ END // large portrait
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~nedwin%edwin_small%~ END // small portrait
-
-COPY_EXISTING ~spin916.spl~ ~override~ // add portrait change opcodes to edwin transform spells: change to edwina
-  LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_large%~ END // large portrait
-  LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_small%~ END // small portrait
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -102,6 +134,10 @@ BEGIN @200 DESIGNATED 20
 LABEL ~r1_roorenart_bg2_pcs~
 
 ACTION_FOR_EACH file IN 
+  // bg, minus npcs like dorn, minsc, neera, rasaad that use the same portrait for bg2
+  r1ajant r1alora r1baelo r1branw r1coran r1dynah r1edwi1 r1eldot r1faldo r1garri r1imoe1 r1jahe1 r1kagai 
+  r1khali r1kivan r1monta r1quayl r1safan r1shart r1skie r1tiax r1vico1 r1xan r1xzar r1yesli 
+  // bg2
   r1aerie r1anome r1cernd r1dorn r1edwia r1edwin r1haer r1imoen r1jahei r1jan r1keldo r1korga r1mazzy
   r1minsc r1nalia r1neera r1ohhex r1rasaa r1sarev r1valyg r1vicon r1yoshi 
 BEGIN

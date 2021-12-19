@@ -1,0 +1,35 @@
+
+
+  ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+
+    INCLUDE ~%MOD_FOLDER%/lib/g3_bgee_cpmvars.tpa~
+
+  END ELSE BEGIN
+
+    ACTION_IF GAME_IS ~eet~ THEN BEGIN
+
+      INCLUDE ~eet/other/cpmvars/eet_cpmvars.tpa~
+
+    END ELSE BEGIN
+
+      ACTION_IF GAME_IS ~tutu tutu_totsc~ THEN BEGIN
+
+        INCLUDE ~%MOD_FOLDER%/lib/g3_tutu_cpmvars.tpa~
+
+      END ELSE BEGIN
+
+        ACTION_IF GAME_IS ~bgt~ THEN BEGIN
+  
+          INCLUDE ~%MOD_FOLDER%/lib/g3_bgt_cpmvars.tpa~
+          
+        END ELSE BEGIN // original bg or some other game where this doesn't matter
+  
+          INCLUDE ~%MOD_FOLDER%/lib/g3_bg_cpmvars.tpa~
+
+        END
+
+      END
+
+    END
+
+  END

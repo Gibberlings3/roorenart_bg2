@@ -5,8 +5,8 @@ REM /* this initializes the values for the different variables referenced in com
 call "%~dp0..\ModPackaging\utilities\ie_games.bat"
 
 REM /* MODIFY: set the values of the 3 variables below to reflect the current mod version */
-set "mod_name=RoorenArt's BG2 Portrait Pack"
-set mod_version=v1
+set "mod_name=RoorenArt's Portrait Pack"
+set mod_version=v2
 set mod_folder=roorenart_bg2
 
 REM /* MODIFY: list here which IE games the mod is compatible with, from this list of possibilities: */
