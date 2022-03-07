@@ -1,4 +1,4 @@
-BACKUP ~roorenart_bg2/backup~
+BACKUP ~weidu_external/roorenart_bg2/backup~
 SUPPORT ~https://www.gibberlings3.net/forums/forum/28-miscellaneous-released-mods/~
 
 VERSION ~v3~
@@ -17,7 +17,8 @@ END
 README ~roorenart_bg2/readme-roorenart_bg2-%LANGUAGE%.html~ ~roorenart_bg2/readme-roorenart_bg2.html~
 
 LANGUAGE ~English~  ~english~ ~roorenart_bg2/lang/english/setup.tra~
-LANGUAGE ~Francais~ ~french~  ~roorenart_bg2/lang/french/setup.tra~
+LANGUAGE ~Francais~ ~french~  ~roorenart_bg2/lang/english/setup.tra~
+                              ~roorenart_bg2/lang/french/setup.tra~
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
