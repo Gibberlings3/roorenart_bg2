@@ -1,22 +1,23 @@
 BACKUP ~roorenart_bg2/backup~
 SUPPORT ~https://www.gibberlings3.net/forums/forum/28-miscellaneous-released-mods/~
 
-VERSION ~v2~
+VERSION ~v3~
 
 ALWAYS
 
   ACTION_IF NOT VARIABLE_IS_SET firebeadstate1 THEN BEGIN // check to make this happen only once per install
     
-	  INCLUDE ~roorenart_bg2/lib/g3_cpmvars_master.tpa~
+	INCLUDE ~roorenart_bg2/lib/g3_cpmvars_master.tpa~
     INCLUDE ~roorenart_bg2/lib/cd_portrait_copy.tph~
   
   END
 
 END
 
-README ~roorenart_bg2/readme-roorenart_bg2.html~
+README ~roorenart_bg2/readme-roorenart_bg2-%LANGUAGE%.html~ ~roorenart_bg2/readme-roorenart_bg2.html~
 
-LANGUAGE ~English~ ~english~ ~roorenart_bg2/english/setup.tra~
+LANGUAGE ~English~  ~english~ ~roorenart_bg2/lang/english/setup.tra~
+LANGUAGE ~Francais~ ~french~  ~roorenart_bg2/lang/french/setup.tra~
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -92,10 +93,10 @@ ACTION_PHP_EACH cd_rooren_art_portraits AS dest => src BEGIN
 END
 
 ACTION_IF GAME_IS ~bg2 tob bg2ee eet bgt~ BEGIN // edwin > edwina stuff
-  
+
   // edwin > edwina stuff
   ACTION_IF GAME_IS ~bg2ee eet~ THEN BEGIN 
-    
+
     OUTER_SPRINT edwin_large ~l~
     OUTER_SPRINT edwin_small ~m~
     COPY ~roorenart_bg2/portraits/r1edwia_330.bmp~ ~override/royo4%edwin_large%.bmp~
@@ -119,7 +120,7 @@ ACTION_IF GAME_IS ~bg2 tob bg2ee eet bgt~ BEGIN // edwin > edwina stuff
     LPF DELETE_EFFECT INT_VAR match_opcode = 107 silent = 1 END // delete other effects just in case
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 1 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_large%~ END // large portrait
     LPF ADD_SPELL_EFFECT INT_VAR opcode = 107 target = 2 parameter2 = 0 timing = 1 STR_VAR resource = EVAL ~royo4%edwin_small%~ END // small portrait
-  
+
 END
 
 /////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\/////\\\\\
@@ -141,7 +142,7 @@ ACTION_FOR_EACH file IN
   r1aerie r1anome r1cernd r1dorn r1edwia r1edwin r1haer r1imoen r1jahei r1jan r1keldo r1korga r1mazzy
   r1minsc r1nalia r1neera r1ohhex r1rasaa r1sarev r1valyg r1vicon r1yoshi 
 BEGIN
-						
+
   LAF cd_pc_portrait_copy STR_VAR source = "%file%" source_path = "roorenart_bg2/portraits" END
 
 END
